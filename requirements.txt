@@ -1,0 +1,5 @@
+streamlit
+joblib
+scikit-learn
+pandas
+# Add any other libraries your specific model needs, e.g., numpy or tensorflow
