@@ -21,19 +21,22 @@ feature3 = st.number_input("Windspeed (km/h):", value=0.0)
 
 if st.button("Predict Wildfire"):
     # 1. Put input data into a DataFrame (must match column names!)
+        # ...
+    # This line must use the correct column names:
     input_data = pd.DataFrame(
         [[feature1, feature2, feature3]], 
         columns=['temp', 'humidity', 'windspeed'] 
     )
     
-    # *** 2. CRITICAL EDIT: Transform the input data using the loaded scaler ***
-    # The model expects data scaled between 0 and 1 because you used MinMaxScaler
+    # This line must transform the data using the scaler:
     scaled_input_data = scaler.transform(input_data)
 
-    # 3. Make prediction using the SCALED data
+    # This line must use the SCALED data for prediction:
     prediction = model.predict(scaled_input_data)
+    # ...
     
     st.success(f"The model predicted: {prediction}")
+
 
 
 
