@@ -19,19 +19,30 @@ feature2 = st.number_input("Humidity (%):", value=0.0)
 feature3 = st.number_input("Windspeed (km/h):", value=0.0)
 
 # Create a button to make a prediction
+# ... (imports and model loading code) ...
+
 if st.button("Predict Wildfire"):
-    # *** THIS IS THE CRITICAL LINE TO ENSURE IT'S CORRECT ***
-    # The 'columns' list must match your original training data names exactly
     input_data = pd.DataFrame(
         [[feature1, feature2, feature3]], 
         columns=['temp', 'humidity', 'windspeed'] 
     )
+    
+    # Check probabilities instead of just the final prediction
+    prediction_proba = model.predict_proba(input_data)
+    prediction = model.predict(input_data)
+
+    st.success(f"The model predicted class: {prediction[0]}")
+    # Display the probabilities for debugging
+    st.write("Prediction Probabilities:", prediction_proba) 
+    # Example output: [[0.98, 0.02]] meaning 98% low, 2% high
+
     
     # Make prediction
     prediction = model.predict(input_data)
     
     # Display the result
     st.success(f"The model predicted: {prediction[0]}")
+
 
 
 
