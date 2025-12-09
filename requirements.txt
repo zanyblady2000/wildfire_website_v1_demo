@@ -1,5 +1,5 @@
 streamlit
 joblib
-scikit-learn
+scikit-learn==1.6.1
 pandas
 # Add any other libraries your specific model needs, e.g., numpy or tensorflow
