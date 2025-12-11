@@ -23,13 +23,13 @@ st.sidebar.header("Input Weather Conditions")
 def user_input_features():
     # Define interactive input widgets for humidity, temp, and windspeed
     # These sliders appear in the sidebar for a clean interface
-    humidity = st.sidebar.slider('temp (%)', 0.0, 100.0, 50.0)
-    temp = st.sidebar.slider('humidity (°C)', -10.0, 40.0, 20.0)
-    windspeed = st.sidebar.slider('windspeed (km/h)', 0.0, 50.0, 15.0)
+    temp = st.sidebar.slider('temp', 0.0, 100.0, 50.0)
+    humidity = st.sidebar.slider('humidity', -10.0, 40.0, 20.0)
+    windspeed = st.sidebar.slider('windspeed', 0.0, 50.0, 15.0)
 
     # Create a DataFrame from the inputs with correct feature names
-    data = {'humidity': humidity,
-            'temp': temp,
+    data = {'temp': temp,
+            'humidity': humidity,
             'windspeed': windspeed}
     # index= is necessary for pandas to correctly handle single-row input
     features_df = pd.DataFrame(data, index=[0])
@@ -58,6 +58,7 @@ if st.button('Predict Outcome'):
     # Display the result (assuming a simple classification outcome)
     st.success(f"The model predicts: {prediction[0]}")
     # st.info(f"Confidence (Class {prediction[0]}): {max(prediction_proba[0]):.2f}")
+
 
 
 
