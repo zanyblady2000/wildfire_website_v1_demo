@@ -37,7 +37,7 @@ def user_input_features():
             'lat': lat,
             'long': long}
             
-    features_df = pd.DataFrame(data, index=)
+    features_df = pd.DataFrame(data, index=[0])
     return features_df
 
 # --- Main App Logic ---
@@ -65,6 +65,7 @@ if st.button('Predict Outcome'):
     st.subheader('Prediction Result')
     # Display the result using f-string formatting
     st.success(f"The model predicts: {predicted}")
+
 
 
 
