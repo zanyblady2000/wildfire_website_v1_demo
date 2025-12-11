@@ -68,9 +68,11 @@ if st.button('Predict Outcome'):
 
     fig = px.scatter_mapbox(mapping_df, lat='lat', lon='long', color='predicted',
                         color_discrete_map={'High': 'red', 'Low': 'green'},
-                        zoom=3, height=500)
+                        zoom=3, height=500,
+                        hover_data=['temp', 'humidity', 'windspeed'])
     fig.update_layout(mapbox_style='open-street-map')
-    st.map(mapping_df)
+    st.plotly_chart(fig, use_container_width=True)
+
 
 
 
