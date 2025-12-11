@@ -65,7 +65,8 @@ if st.button('Predict Outcome'):
     st.subheader('Prediction Result')
     # Display the result using f-string formatting
     st.success(f"The model predicts: {predicted}")
-
+    
+    mapping_df['predicted'] = predicted
     mapping_df = mapping_df[['lat', 'long', 'predicted']]
 
     map_df = mapping_df[['lat', 'long', 'predicted']]
@@ -76,6 +77,7 @@ if st.button('Predict Outcome'):
     fig.update_layout(mapbox_style='open-street-map')
     fig.show()
                     
+
 
 
 
