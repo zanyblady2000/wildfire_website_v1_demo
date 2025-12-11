@@ -42,7 +42,7 @@ def user_input_features():
     return features_df
 
 # --- Main App Logic ---
-raw_input_df = user_input_features()
+prediction_data = raw_input_data[['humidity', 'temp', 'windspeed']]
 
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
@@ -51,7 +51,7 @@ st.write(raw_input_df)
 if st.button('Predict Outcome'):
     # Apply the SAME scaling used during training to the NEW user input
     # The scaler outputs a numpy array
-    scaled_input_array = scaler.transform(raw_input_df)
+    scaled_input_array = scaler.transform(prediction_data)
 
     # Make the prediction using the loaded 'rfc' model on the scaled data
     prediction = rfc.predict(scaled_input_array)
@@ -71,5 +71,6 @@ if st.button('Predict Outcome'):
                         zoom=3, height=500)
     fig.update_layout(mapbox_style='open-street-map')
     fig.show
+
 
 
