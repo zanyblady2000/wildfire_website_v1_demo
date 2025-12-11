@@ -3,6 +3,7 @@
 import streamlit as st
 import joblib
 import pandas as pd
+import plotly.express as px
 
 # --- Load Assets ---
 # Load the pre-trained model and the pre-fitted scaler from the local directory
@@ -26,6 +27,8 @@ def user_input_features():
     temp = st.sidebar.slider('temp', 0.0, 100.0, 50.0)
     humidity = st.sidebar.slider('humidity', -10.0, 40.0, 20.0)
     windspeed = st.sidebar.slider('windspeed', 0.0, 50.0, 15.0)
+    lat = st.slidebar.slider('lat', 0.0 59.0, 50.0)
+    long = st.slidebar.slider('long', 0.0, -113.0, -124.0)
 
     # Create a DataFrame from the inputs with correct feature names
     data = {'temp': temp,
@@ -57,8 +60,10 @@ if st.button('Predict Outcome'):
     st.subheader('Prediction Result')
     # Display the result (assuming a simple classification outcome)
     predicted = {prediction[0]}
-    st.success(f"The model predicts: {predicted}")
-    # st.info(f"Confidence (Class {prediction[0]}): {max(prediction_proba[0]):.2f}")
+    st.success(f"The model predicts: {predicted}") 
+
+    map_df =
+
 
 
 
