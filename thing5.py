@@ -53,7 +53,7 @@ if st.button('Predict Outcome'):
     # 2. Prepare data for Plotly map visualization
     map_data = raw_input_df.copy()
     map_data['prediction_value'] = predicted_value
-    prediction_mapping = {0: 'Low Risk', 1: 'High Risk'} 
+    prediction_mapping = {0: 'Low', 1: 'High'} 
     map_data['risk_level'] = map_data['prediction_value'].map(prediction_mapping)
 
     # 3. Create the Plotly figure using the 'map_data' DataFrame:
@@ -62,7 +62,7 @@ if st.button('Predict Outcome'):
         lat="lat", 
         lon="long", 
         color="risk_level",  
-        color_discrete_map={'High Risk': 'red', 'Low Risk': 'green'},
+        color_discrete_map={'High': 'red', 'Low': 'green'},
         zoom=5,              
         height=400,
         mapbox_style="carto-positron", 
@@ -73,6 +73,7 @@ if st.button('Predict Outcome'):
     st.plotly_chart(fig, use_container_width=True)
 
   
+
 
 
 
