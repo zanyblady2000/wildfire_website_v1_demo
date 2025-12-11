@@ -45,7 +45,7 @@ def user_input_features():
 prediction_data = raw_input_data[['humidity', 'temp', 'windspeed']]
 
 st.subheader('User Input Features (Raw)')
-st.write(raw_input_df)
+st.write(prediction_data)
 
 # Button to trigger the prediction
 if st.button('Predict Outcome'):
@@ -71,6 +71,7 @@ if st.button('Predict Outcome'):
                         zoom=3, height=500)
     fig.update_layout(mapbox_style='open-street-map')
     fig.show
+
 
 
 
