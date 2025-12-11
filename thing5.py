@@ -6,9 +6,12 @@ import pandas as pd
 
 # --- Load Assets ---
 # Load the pre-trained model and the pre-fitted scaler from the local directory
+# New code with correct filename
 try:
     rfc = joblib.load('rfc_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    # Change the string literal below to match your actual filename:
+    scaler = joblib.load('scaler(1).pkl') 
+# ...
 except FileNotFoundError:
     st.error("Error: Ensure 'rfc_model.pkl' and 'scaler.pkl' are in the same folder as app.py.")
     st.stop()
@@ -55,6 +58,7 @@ if st.button('Predict Outcome'):
     # Display the result (assuming a simple classification outcome)
     st.success(f"The model predicts: {prediction[0]}")
     # st.info(f"Confidence (Class {prediction[0]}): {max(prediction_proba[0]):.2f}")
+
 
 
 
