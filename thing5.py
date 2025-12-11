@@ -1,16 +1,14 @@
-# thing5.py
+# thing5.py (Complete Code)
 
 import streamlit as st
 import joblib
 import pandas as pd
-import plotly.express as px
+import plotly.express as px # Ensure this import is present
 
 # --- Load Assets ---
 try:
     rfc = joblib.load('rfc_model.pkl')
-    # Using the filename provided previously: 'scaler (1).pkl'
     scaler = joblib.load('scaler (1).pkl') 
-
 except FileNotFoundError:
     st.error("Error: Ensure 'rfc_model.pkl' and 'scaler (1).pkl' are in the same folder.")
     st.stop()
@@ -26,52 +24,55 @@ def user_input_features():
     lat = st.sidebar.slider('Latitude', 0.0, 59.0, 50.0)
     long = st.sidebar.slider('Longitude', -180.0, 180.0, -100.0) 
 
-    data = {'temp': temp,
-            'humidity': humidity,
-            'windspeed': windspeed,
-            'lat': lat,
-            'long': long}
+    data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed,
+            'lat': lat, 'long': long}
             
-    # Index added for single-row DataFrame construction
-    features_df = pd.DataFrame(data, index=[0]) 
+    features_df = pd.DataFrame(data, index=) 
     return features_df
 
 # --- Main App Logic ---
 
-# Define the raw input DataFrame (fixes NameError)
+# Define the raw input DataFrame (this runs every time)
 raw_input_df = user_input_features() 
 
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
 
+# The code INSIDE this 'if' block ONLY runs when the button is clicked:
 if st.button('Predict Outcome'):
     
-    # Create a DataFrame for prediction with ONLY the 3 trained features:
+    # 1. Prepare data for model prediction (only the 3 features)
     prediction_data = raw_input_df[['temp', 'humidity', 'windspeed']]
-    
-    # Scale ONLY the prediction data
     scaled_input_array = scaler.transform(prediction_data)
-
-    # Make the prediction
     prediction = rfc.predict(scaled_input_array)
-    
-    # Extract the single value from the NumPy array:
     predicted_value = prediction
     
     st.subheader('Prediction Result')
     st.success(f"The model predicts: {predicted_value}")
     
-    # MAPPING LOGIC 
-    mapping_df = raw_input_df.copy()
-    mapping_df['predicted'] = predicted_value 
-    mapping_df = mapping_df[['lat', 'long', 'predicted']]
+    # 2. Prepare data for Plotly map visualization
+    map_data = raw_input_df.copy()
+    map_data['prediction_value'] = predicted_value
+    prediction_mapping = {0: 'Low Risk', 1: 'High Risk'} 
+    map_data['risk_level'] = map_data['prediction_value'].map(prediction_mapping)
 
-    fig = px.scatter_mapbox(mapping_df, lat='lat', lon='long',
-                        zoom=3, height=500,
-                        hover_data=['temp', 'humidity', 'windspeed'])
-    fig.update_layout(mapbox_style='open-street-map')
+    # 3. Create the Plotly figure using the 'map_data' DataFrame:
+    fig = px.scatter_mapbox(
+        map_data, # Pass the prepared DataFrame here
+        lat="lat", 
+        lon="long", 
+        color="risk_level",  
+        color_discrete_map={'High Risk': 'red', 'Low Risk': 'green'},
+        zoom=5,              
+        height=400,
+        mapbox_style="carto-positron", 
+        hover_data=['temp', 'humidity', 'windspeed', 'risk_level'] 
+    )
+    
+    # 4. Display the figure using st.plotly_chart
     st.plotly_chart(fig, use_container_width=True)
 
+  
 
 
 
