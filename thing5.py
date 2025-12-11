@@ -33,7 +33,7 @@ def user_input_features():
             'long': long}
             
     # Index added for single-row DataFrame construction
-    features_df = pd.DataFrame(data, index=) 
+    features_df = pd.DataFrame(data, index=[0]) 
     return features_df
 
 # --- Main App Logic ---
@@ -71,6 +71,7 @@ if st.button('Predict Outcome'):
                         zoom=3, height=500)
     fig.update_layout(mapbox_style='open-street-map')
     fig.show()
+
 
 
 
