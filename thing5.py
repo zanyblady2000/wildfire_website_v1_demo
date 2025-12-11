@@ -48,6 +48,10 @@ raw_input_df = user_input_features()
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
 
+predicted = {prediction[0]}
+
+prediction = rfc.predict(scaled_input_array)
+
 if st.button('Predict Outcome'):
     # *** CRITICAL STEP *** 
     # Create a NEW DataFrame for prediction, containing ONLY the 3 trained features:
@@ -58,9 +62,6 @@ if st.button('Predict Outcome'):
     scaled_input_array = scaler.transform(prediction_data)
 
     # Make the prediction using ONLY the scaled data
-    prediction = rfc.predict(scaled_input_array)
-
-    predicted = {prediction[0]}
     
     st.subheader('Prediction Result')
     # Display the result using f-string formatting
@@ -77,6 +78,7 @@ if st.button('Predict Outcome'):
     fig.update_layout(mapbox_style='open-street-map')
     fig.show()
                     
+
 
 
 
