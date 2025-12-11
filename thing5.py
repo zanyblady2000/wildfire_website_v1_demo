@@ -42,7 +42,7 @@ def user_input_features():
     return features_df
 
 # --- Main App Logic ---
-prediction_data = raw_input_data[['humidity', 'temp', 'windspeed']]
+prediction_data = raw_input_df[['humidity', 'temp', 'windspeed']]
 
 st.subheader('User Input Features (Raw)')
 st.write(prediction_data)
@@ -71,6 +71,7 @@ if st.button('Predict Outcome'):
                         zoom=3, height=500)
     fig.update_layout(mapbox_style='open-street-map')
     fig.show
+
 
 
 
