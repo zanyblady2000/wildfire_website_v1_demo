@@ -1,43 +1,63 @@
+# app.py
+
 import streamlit as st
 import joblib
 import pandas as pd
-# Import the specific class used for the scaler to help joblib load it correctly
-from sklearn.preprocessing import MinMaxScaler 
-from sklearn.ensemble import RandomForestClassifier # Import model class too
 
-# Load the Random Forest model and the scaler object
+# --- Load Assets ---
+# Load the pre-trained model and the pre-fitted scaler from the local directory
 try:
-    # Ensure these filenames match exactly what is in your GitHub repo
-    model = joblib.load('rfc_model.joblib')
-    scaler = joblib.load('scaler.joblib') # Load the MinMax Scaler object
+    rfc = joblib.load('rfc_model.pkl')
+    scaler = joblib.load('scaler.pkl')
 except FileNotFoundError:
-    st.error("One or more required files (model or scaler) were not found in the repository.")
+    st.error("Error: Ensure 'rfc_model.pkl' and 'scaler.pkl' are in the same folder as app.py.")
     st.stop()
 
-st.title("Wildfire Predictor Web App (RFC Model)")
-st.write("Enter weather conditions to predict the likelihood or size of a wildfire.")
+st.title("Weather Prediction App (RFC Model)")
+st.sidebar.header("Input Weather Conditions")
 
-# --- User input fields ---
-feature1 = st.number_input("Temperature (°C):", value=0.0)
-feature2 = st.number_input("Humidity (%):", value=0.0)
-feature3 = st.number_input("Windspeed (km/h):", value=0.0)
+# --- User Input Function ---
+def user_input_features():
+    # Define interactive input widgets for humidity, temp, and windspeed
+    # These sliders appear in the sidebar for a clean interface
+    humidity = st.sidebar.slider('Humidity (%)', 0.0, 100.0, 50.0)
+    temp = st.sidebar.slider('Temperature (°C)', -10.0, 40.0, 20.0)
+    windspeed = st.sidebar.slider('Windspeed (km/h)', 0.0, 50.0, 15.0)
 
-if st.button("Predict Wildfire"):
-    # 1. Put input data into a DataFrame (must match column names exactly!)
-    input_data = pd.DataFrame(
-        [[feature1, feature2, feature3]], 
-        columns=['temp', 'humidity', 'windspeed'] 
-    )
+    # Create a DataFrame from the inputs with correct feature names
+    data = {'humidity': humidity,
+            'temp': temp,
+            'windspeed': windspeed}
+    # index= is necessary for pandas to correctly handle single-row input
+    features_df = pd.DataFrame(data, index=[0])
+
+    return features_df
+
+# --- Main App Logic ---
+raw_input_df = user_input_features()
+
+st.subheader('User Input Features (Raw)')
+st.write(raw_input_df)
+
+# Button to trigger the prediction
+if st.button('Predict Outcome'):
+    # Apply the SAME scaling used during training to the NEW user input
+    # The scaler outputs a numpy array
+    scaled_input_array = scaler.transform(raw_input_df)
+
+    # Make the prediction using the loaded 'rfc' model on the scaled data
+    prediction = rfc.predict(scaled_input_array)
     
-    # 2. CRITICAL EDIT: Transform the input data using the loaded scaler
-    # The model expects data scaled between 0 and 1 because you used MinMaxScaler
-    scaled_input_data = scaler.transform(input_data)
+    # Optional: Get prediction probabilities if using a Classifier
+    # prediction_proba = rfc.predict_proba(scaled_input_array)
 
-    # 3. Make prediction using the SCALED data
-    prediction = model.predict(scaled_input_data)
-    
-    # Display the result
-    st.success(f"The model predicted class: {prediction[0]}")
+    st.subheader('Prediction Result')
+    # Display the result (assuming a simple classification outcome)
+    st.success(f"The model predicts: {prediction[0]}")
+    # st.info(f"Confidence (Class {prediction[0]}): {max(prediction_proba[0]):.2f}")
+
+
+
 
 
 
