@@ -53,23 +53,29 @@ predicted = {prediction[0]}
 prediction = rfc.predict(scaled_input_array)
 
 if st.button('Predict Outcome'):
-    # *** CRITICAL STEP *** 
-    # Create a NEW DataFrame for prediction, containing ONLY the 3 trained features:
-    
+    # *** PASTE THE NEW CODE HERE ***
+
+    # Create a DataFrame for prediction with ONLY the 3 trained features:
     prediction_data = raw_input_df[['temp', 'humidity', 'windspeed']]
     
-    # Scale ONLY the prediction data using the fitted scaler
+    # Scale ONLY the prediction data
     scaled_input_array = scaler.transform(prediction_data)
 
-    # Make the prediction using ONLY the scaled data
+    # Make the prediction
+    prediction = rfc.predict(scaled_input_array)
+    
+    # Extract the single value from the NumPy array:
+    predicted_value = prediction
     
     st.subheader('Prediction Result')
-    # Display the result using f-string formatting
-    st.success(f"The model predicts: {predicted}")
-    
+    # Use the single value for the success message
+    st.success(f"The model predicts: {predicted_value}")
     mapping_df = raw_input_df.copy()
-    mapping_df['predicted'] = predicted
-
+    
+    # 2. Add the single predicted value as a new column named 'predicted'
+    mapping_df['predicted'] = predicted_value 
+    
+    # 3. Now select the desired columns.
     mapping_df = mapping_df[['lat', 'long', 'predicted']]
 
     fig = px.scatter_mapbox(mapping_df, lat='lat', lon='long',
@@ -78,6 +84,7 @@ if st.button('Predict Outcome'):
     fig.update_layout(mapbox_style='open-street-map')
     fig.show()
                     
+
 
 
 
