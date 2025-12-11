@@ -48,7 +48,7 @@ raw_input_df = user_input_features()
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
 
-predicted = {prediction[0]}
+predicted = prediction
 
 prediction = rfc.predict(scaled_input_array)
 
@@ -84,6 +84,7 @@ if st.button('Predict Outcome'):
     fig.update_layout(mapbox_style='open-street-map')
     fig.show()
                     
+
 
 
 
