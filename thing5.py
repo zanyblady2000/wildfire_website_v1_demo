@@ -33,7 +33,9 @@ def user_input_features():
     # Create a DataFrame from the inputs with correct feature names
     data = {'temp': temp,
             'humidity': humidity,
-            'windspeed': windspeed}
+            'windspeed': windspeed,
+            'lat': lat,
+            'long': long}
     # index= is necessary for pandas to correctly handle single-row input
     features_df = pd.DataFrame(data, index=[0])
 
@@ -63,6 +65,7 @@ if st.button('Predict Outcome'):
     st.success(f"The model predicts: {predicted}") 
 
     map_df =
+
 
 
 
