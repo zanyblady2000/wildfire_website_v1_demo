@@ -56,8 +56,10 @@ if st.button('Predict Outcome'):
 
     st.subheader('Prediction Result')
     # Display the result (assuming a simple classification outcome)
-    st.success(f"The model predicts: {prediction[0]}")
+    predicted = {prediction[0]}
+    st.success(f"The model predicts: {predicted}")
     # st.info(f"Confidence (Class {prediction[0]}): {max(prediction_proba[0]):.2f}")
+
 
 
 
