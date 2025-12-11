@@ -70,7 +70,8 @@ if st.button('Predict Outcome'):
                         color_discrete_map={'High': 'red', 'Low': 'green'},
                         zoom=3, height=500)
     fig.update_layout(mapbox_style='open-street-map')
-    fig.show()
+    st.map(fig)
+
 
 
 
