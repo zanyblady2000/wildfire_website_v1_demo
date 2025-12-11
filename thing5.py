@@ -66,14 +66,15 @@ if st.button('Predict Outcome'):
     # Display the result using f-string formatting
     st.success(f"The model predicts: {predicted}")
 
-    map_df = map_df[['lat', 'long', 'predicted']]
+    map_df = raw_input_df[['lat', 'long', 'predicted']]
 
-    fig = px.scatter_mapbox(map_df, lat='lat', lon='long', color='fire_occurrence',
+    fig = px.scatter_mapbox(map_df, lat='lat', lon='long',
                         color_discrete_map={'High': 'red', 'Low': 'green'},
                         zoom=3, height=500)
-fig.update_layout(mapbox_style='open-street-map')
-fig.show()
+    fig.update_layout(mapbox_style='open-street-map')
+    fig.show()
                     
+
 
 
 
