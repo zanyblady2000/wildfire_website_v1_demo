@@ -42,7 +42,7 @@ def user_input_features():
     return features_df
 
 # --- Main App Logic ---
-raw_input_df = user_input_features()
+raw_input_df = user_input_features(
 
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
@@ -64,26 +64,11 @@ if st.button('Predict Outcome'):
     predicted = {prediction[0]}
     st.success(f"The model predicts: {predicted}") 
 
-    map_df =
+    map_df = raw_input_df[['lat', 'long', 'predicted']]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fig = px.scatter_mapbox(map_df, lat='lat', lon='long', color='fire_occurrence',
+                        color_discrete_map={'High': 'red', 'Low': 'green'},
+                        zoom=3, height=500)
+    fig.update_layout(mapbox_style='open-street-map')
+    fig.show
 
