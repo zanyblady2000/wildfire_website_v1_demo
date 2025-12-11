@@ -27,7 +27,7 @@ def user_input_features():
     temp = st.sidebar.slider('temp', 0.0, 100.0, 50.0)
     humidity = st.sidebar.slider('humidity', -10.0, 40.0, 20.0)
     windspeed = st.sidebar.slider('windspeed', 0.0, 50.0, 15.0)
-    lat = st.sidebar.slider('lat', 0.0 59.0, 50.0)
+    lat = st.sidebar.slider('lat', 0.0, 59.0, 50.0)
     long = st.sidebar.slider('long', 0.0, -113.0, -124.0)
 
     # Create a DataFrame from the inputs with correct feature names
@@ -65,6 +65,7 @@ if st.button('Predict Outcome'):
     st.success(f"The model predicts: {predicted}") 
 
     map_df =
+
 
 
 
