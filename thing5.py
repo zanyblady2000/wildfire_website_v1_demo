@@ -64,7 +64,7 @@ if st.button('Predict Outcome'):
         map_data, # Pass the prepared DataFrame here
         lat="lat", 
         lon="long", 
-        color=map_data["risk_level"], 
+        color="risk_level", 
         color_discrete_map={'High': 'red', 'Low': 'green'}, # Original color map
         zoom=5,             
         height=400,
@@ -75,5 +75,6 @@ if st.button('Predict Outcome'):
     # 4. Display the figure using st.plotly_chart
     # Original display was inside the button block
     st.plotly_chart(fig, use_container_width=True)
+
 
 
