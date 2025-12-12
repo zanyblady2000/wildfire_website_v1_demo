@@ -65,7 +65,8 @@ if st.button('Predict Outcome'):
     predicted_value = prediction[0] # Extract the scalar value
 
     # Calculate the descriptive risk level
-    descriptive_risk = PREDICTION_MAPPING.get(predicted_value, 'Unknown')
+    # FIX: Cast predicted_value to a standard int to ensure successful dictionary lookup.
+    descriptive_risk = PREDICTION_MAPPING.get(int(predicted_value), 'Unknown')
 
     # Store the new prediction result in session state
     st.session_state.predicted_risk = descriptive_risk
@@ -84,7 +85,7 @@ fig = px.scatter_mapbox(
     lat="lat", 
     lon="long", 
     color="risk_level",  
-    color_discrete_map={'High': 'red', 'Low': 'green', 'Not Predicted': 'grey'},
+    color_discrete_map={'High': 'red', 'Low': 'green', 'Not Predicted': 'grey', 'Unknown': 'purple'}, # Added Unknown color for robustness
     zoom=5,             
     height=400,
     mapbox_style="carto-positron", 
@@ -92,17 +93,3 @@ fig = px.scatter_mapbox(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
