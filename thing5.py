@@ -68,12 +68,13 @@ if st.button('Predict Outcome'):
         zoom=5,             
         height=400,
         mapbox_style="carto-positron", 
-        hover_data=['temp', 'humidity', 'windspeed', 'risk_level'] 
+        hover_data=['temp', 'humidity', 'windspeed', 'prediction_value'] 
     )
     
     # 4. Display the figure using st.plotly_chart
     # Original display was inside the button block
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
