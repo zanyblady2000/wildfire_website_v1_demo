@@ -36,13 +36,20 @@ PREDICTION_MAPPING = {0: 'Low', 1: 'High'}
 
 # --- Main App Logic ---
 
+# 0. Initialize Session State for persistence across reruns (e.g., slider changes)
+# The prediction result is stored here.
+if 'predicted_risk' not in st.session_state:
+    st.session_state.predicted_risk = 'Not Predicted'
+
+
 # 1. Get raw input and set up initial map data (Always runs)
 raw_input_df = user_input_features() 
 map_data = raw_input_df.copy()
 
-# Initialize the 'risk_level' column with a placeholder value 
-# This ensures Plotly has a non-null value to work with before prediction.
-map_data['risk_level'] = 'Not Predicted'
+# The 'risk_level' column is always populated from the persistent session state.
+# This ensures the correct hover data is used even when the script reruns 
+# due to slider manipulation.
+map_data['risk_level'] = st.session_state.predicted_risk 
 
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
@@ -57,17 +64,21 @@ if st.button('Predict Outcome'):
     prediction = rfc.predict(scaled_input_array)
     predicted_value = prediction[0] # Extract the scalar value
 
-    # Update the 'risk_level' in the map data using the key mapping
-    # This is where your specific map function is applied to the predicted value
-    map_data['prediction_value'] = predicted_value
-    map_data['risk_level'] = map_data['prediction_value'].map(PREDICTION_MAPPING)
+    # Calculate the descriptive risk level
+    descriptive_risk = PREDICTION_MAPPING.get(predicted_value, 'Unknown')
+
+    # Store the new prediction result in session state
+    st.session_state.predicted_risk = descriptive_risk
+    
+    # Update the map_data for the *current* run
+    map_data['risk_level'] = descriptive_risk
 
     st.subheader('Prediction Result')
-    st.success(f"The model predicts: {map_data['risk_level'].iloc[0]} Risk (Code: {predicted_value})")
+    st.success(f"The model predicts: {descriptive_risk} Risk (Code: {predicted_value})")
 
 
-# 3. Create and Display the Plotly map (Always runs, using the current state of map_data)
-# We include 'Not Predicted' in the color map to handle the initial state
+# 3. Create and Display the Plotly map (Always runs)
+# The map uses map_data, which is now consistently populated by st.session_state.
 fig = px.scatter_mapbox(
     map_data, # Pass the prepared DataFrame here
     lat="lat", 
