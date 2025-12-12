@@ -51,7 +51,7 @@ fig = px.scatter_mapbox(
     )
     
     # 4. Display the figure using st.plotly_chart
-    st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 
 # The code INSIDE this 'if' block ONLY runs when the button is clicked:
 if st.button('Predict Outcome'):
@@ -72,6 +72,7 @@ if st.button('Predict Outcome'):
     map_data['risk_level'] = map_data['prediction_value'].map(prediction_mapping)
 
   
+
 
 
 
