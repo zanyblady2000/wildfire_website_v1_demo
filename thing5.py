@@ -55,7 +55,7 @@ if st.button('Predict Outcome'):
     map_data = raw_input_df.copy()
     map_data['prediction_value'] = predicted_value
     prediction_mapping = {0: 'Low', 1: 'High'} 
-    map_data['risk_level'] = map_data['prediction_value'].map(prediction_mapping)
+    map_data['risk_level'] = map_data['prediction_value'].map({0: 'Low', 1: 'High'})
 
     fig = px.scatter_mapbox(
         map_data, # Pass the prepared DataFrame here
@@ -73,6 +73,7 @@ if st.button('Predict Outcome'):
     st.plotly_chart(fig, use_container_width=True)
 
   
+
 
 
 
