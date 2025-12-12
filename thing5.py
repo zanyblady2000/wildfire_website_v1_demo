@@ -38,20 +38,6 @@ raw_input_df = user_input_features()
 st.subheader('User Input Features (Raw)')
 st.write(raw_input_df)
 
-fig = px.scatter_mapbox(
-        map_data, # Pass the prepared DataFrame here
-        lat="lat", 
-        lon="long", 
-        color="risk_level",  
-        color_discrete_map={'High': 'red', 'Low': 'green'},
-        zoom=5,              
-        height=400,
-        mapbox_style="carto-positron", 
-        hover_data=['temp', 'humidity', 'windspeed', 'risk_level'] 
-    )
-    
-    # 4. Display the figure using st.plotly_chart
-st.plotly_chart(fig, use_container_width=True)
 
 # The code INSIDE this 'if' block ONLY runs when the button is clicked:
 if st.button('Predict Outcome'):
@@ -71,7 +57,23 @@ if st.button('Predict Outcome'):
     prediction_mapping = {0: 'Low', 1: 'High'} 
     map_data['risk_level'] = map_data['prediction_value'].map(prediction_mapping)
 
+    fig = px.scatter_mapbox(
+        map_data, # Pass the prepared DataFrame here
+        lat="lat", 
+        lon="long", 
+        color="risk_level",  
+        color_discrete_map={'High': 'red', 'Low': 'green'},
+        zoom=5,              
+        height=400,
+        mapbox_style="carto-positron", 
+        hover_data=['temp', 'humidity', 'windspeed', 'risk_level'] 
+    )
+    
+    # 4. Display the figure using st.plotly_chart
+    st.plotly_chart(fig, use_container_width=True)
+
   
+
 
 
 
