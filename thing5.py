@@ -54,7 +54,7 @@ if st.button('Predict Outcome'):
     
     # 2. Prepare data for Plotly map visualization
     map_data = raw_input_df.copy()
-    map_data['prediction_value'] = predicted_value
+    map_data['prediction_value'] = {predicted_value}
     # Original definition of the mapping was inside the button block
     prediction_mapping = {0: 'Low', 1: 'High'} 
     map_data['risk_level'] = map_data['prediction_value'].map({1: 'High', 0: 'Low'})
@@ -75,6 +75,7 @@ if st.button('Predict Outcome'):
     # 4. Display the figure using st.plotly_chart
     # Original display was inside the button block
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
