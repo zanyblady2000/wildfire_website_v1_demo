@@ -3,8 +3,8 @@ import joblib
 import pandas as pd
 import plotly.express as px 
 
-    rfc = joblib.load('rfc_model.pkl')
-    scaler = joblib.load('scaler (1).pkl') 
+rfc = joblib.load('rfc_model.pkl')
+scaler = joblib.load('scaler (1).pkl') 
 
 st.title("Weather Prediction App (RFC Model)")
 st.sidebar.header("Input Weather Conditions")
@@ -55,6 +55,7 @@ if st.button('Predict Outcome'):
     )
     
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
