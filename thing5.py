@@ -18,19 +18,19 @@ def user_input_features():
 
     data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed, 'lat': lat, 'long': long}
             
-    features_df = pd.DataFrame(data, index=[1])
+    features_df = pd.DataFrame(data, index=[0])
     return features_df
 
 raw_input_df = user_input_features() 
 
-st.subheader('User Input Features (Raw)')
+st.subheader('User Input Features')
 st.write(raw_input_df)
 
 if st.button('Predict Outcome'):
     
     prediction_data = raw_input_df[['temp', 'humidity', 'windspeed']]
-    scaled_input_array = scaler.transform(prediction_data)
-    prediction = rfc.predict(scaled_input_array)
+    scaled_input_data = scaler.transform(prediction_data)
+    prediction = rfc.predict(scaled_input_data)
     predicted_value = prediction
     
     st.subheader('Prediction Result')
@@ -53,6 +53,7 @@ if st.button('Predict Outcome'):
     )
     
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
