@@ -10,18 +10,15 @@ st.title("Weather Prediction App (RFC Model)")
 st.sidebar.header("Input Weather Conditions")
 
 def user_input_features():
-    """Collects user inputs via Streamlit sidebar sliders."""
     temp = st.sidebar.slider('Temperature (°C)', -10.0, 40.0, 20.0)
     humidity = st.sidebar.slider('Humidity (%)', 0.0, 100.0, 50.0)
     windspeed = st.sidebar.slider('Windspeed (km/h)', 0.0, 50.0, 15.0)
     lat = st.sidebar.slider('Latitude', 0.0, 59.0, 50.0)
     long = st.sidebar.slider('Longitude', -180.0, 180.0, -100.0) 
 
-    data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed,
-            'lat': lat, 'long': long}
+    data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed, 'lat': lat, 'long': long}
             
-    features_df = pd.DataFrame(data, index=[0]) 
-    return features_df
+    features_df = pd.DataFrame(data, index=[0])
 
 raw_input_df = user_input_features() 
 
@@ -55,6 +52,7 @@ if st.button('Predict Outcome'):
     )
     
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
