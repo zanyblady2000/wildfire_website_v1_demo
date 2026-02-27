@@ -18,7 +18,7 @@ def user_input_features():
 
     data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed, 'lat': lat, 'long': long}
             
-    features_df = pd.DataFrame(data, index=[0])
+    features_df = pd.DataFrame(data)
     return features_df
 
 raw_input_df = user_input_features() 
@@ -53,6 +53,7 @@ if st.button('Predict Outcome'):
     )
     
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
