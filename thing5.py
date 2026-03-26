@@ -36,24 +36,6 @@ if st.button('Predict Outcome'):
     st.subheader('Prediction Result')
     st.success(f"The model predicts: {predicted_value}")
 
-    map_data = raw_input_df.copy()
-    map_data['prediction_value'] = predicted_value
-    prediction_mapping = {0: 'Low', 1: 'High'} 
-
-    fig = px.scatter_mapbox(
-        map_data, 
-        lat="lat", 
-        lon="long", 
-        color="prediction_value", 
-        color_discrete_map={'High': 'red', 'Low': 'green'}, 
-        zoom=5,             
-        height=400,
-        mapbox_style="carto-positron", 
-        hover_data=['temp', 'humidity', 'windspeed', 'prediction_value'] 
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
-
 
 
 
