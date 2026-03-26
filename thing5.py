@@ -13,8 +13,6 @@ def inputs():
     temp = st.sidebar.slider('Temperature (°C)', -10.0, 40.0, 20.0)
     humidity = st.sidebar.slider('Humidity (%)', 0.0, 100.0, 50.0)
     windspeed = st.sidebar.slider('Windspeed (km/h)', 0.0, 50.0, 15.0)
-    lat = st.sidebar.slider('Latitude', 0.0, 59.0, 50.0)
-    long = st.sidebar.slider('Longitude', -180.0, 180.0, -100.0) 
 
     data = {'temp': temp, 'humidity': humidity, 'windspeed': windspeed, 'lat': lat, 'long': long}
             
